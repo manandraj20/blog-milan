@@ -1,6 +1,6 @@
 // API URL
-const apiUrl = 'https://explore-fsrq.onrender.com';
-// const apiUrl = 'http://localhost:5000';
+// const apiUrl = 'https://explore-fsrq.onrender.com';
+const apiUrl = 'http://localhost:5000';
 
 // Function to fetch and display blog posts
 async function fetchBlogs() {
@@ -18,7 +18,7 @@ async function fetchBlogs() {
 
             // Create link to the blog post (for now just a placeholder)
             const postLink = document.createElement('a');
-            postLink.href = 'post.html'; // Update with actual URL if available
+            postLink.href = `blog.html?id=${blog._id}`; 
 
             // Create blog title
             const title = document.createElement('h2');
@@ -89,6 +89,42 @@ async function createBlog() {
         console.error('Error creating blog:', error);
     }
 }
+
+async function fetchBlogById(blogId) {
+    try {
+        const response = await fetch(`${apiUrl}/blogs/${blogId}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const blog = await response.json();
+
+        // Update the HTML elements with the blog data
+        document.querySelector('.post-heading h1').innerText = blog.title;
+        document.querySelector('.post-heading h2').innerText = blog.subtitle || '';
+        document.querySelector('.post-heading .meta').innerHTML = `Posted by <a href="#!">Milan Anand Raj</a> on ${new Date(blog.date).toLocaleDateString()}`;
+
+        const blogContent = document.querySelector('.post-content');
+        blogContent.innerHTML = ''; // Clear the container before appending new content
+
+        // Assuming the blog content is HTML
+        blogContent.innerHTML = blog.content;
+    } catch (error) {
+        console.error('Error fetching the blog by ID:', error);
+    }
+}
+
+function loadBlog() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const blogId = urlParams.get('id');
+    if (blogId) {
+        fetchBlogById(blogId);
+    }
+}
+
+// Expose the function for external call
+window.loadBlog = loadBlog;
+
+
 
 // Navigation bar script
 window.addEventListener('DOMContentLoaded', () => {
