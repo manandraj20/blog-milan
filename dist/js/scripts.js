@@ -1,6 +1,6 @@
 // API URL
 // amazon EC2 instance
-const apiUrl = 'http://3.26.186.98:5000';
+const apiUrl = 'https://3.26.186.98:5000';
 // const apiUrl = 'http://localhost:5000';
 
 // Function to fetch and display blog posts
