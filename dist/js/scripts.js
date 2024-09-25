@@ -1,5 +1,6 @@
 // API URL
-const apiUrl = 'https://explore-fsrq.onrender.com';
+// amazon EC2 instance
+const apiUrl = 'http://3.26.186.98:5000';
 // const apiUrl = 'http://localhost:5000';
 
 // Function to fetch and display blog posts
